@@ -1,0 +1,66 @@
+version: '2'
+services:
+    web:
+        build: docker/images/apache-php
+        ports:
+            - 80:80
+            - 9515:9515
+            - 3000:3000
+        volumes:
+            - ./:/var/www/html:rw
+            - ./docker/sites-enabled/:/etc/httpd/sites-enabled:rw
+        restart: always
+        links:
+            - mysql:mysql
+            - redis:redis
+            - selenium:selenium
+        environment:
+            STAGE: 'local'
+            XDEBUG_CONFIG: remote_host=172.17.0.1 #docker-images network ip.
+            PHP_IDE_CONFIG: "serverName=PHPSTORM"
+        privileged: true
+        extra_hosts:
+            - "localhost:10.11.0.2"
+            - "picpay.localhost:10.11.0.2"
+        networks:
+            docker_micro_servicos:
+                ipv4_address: 10.11.0.2
+    mysql:
+        image: mysql:5.7.22
+        ports:
+            - 3306:3306
+        environment:
+            MYSQL_ROOT_PASSWORD: secret
+            MYSQL_DATABASE: dev
+        restart: always
+        volumes:
+            - ./docker/mysql:/var/lib/mysql:rw
+        networks:
+            docker_micro_servicos:
+                ipv4_address: 10.11.0.3
+        privileged: true
+    redis:
+        image: redis:3
+        ports:
+            - 6379:6379
+        restart: always
+        networks:
+            docker_micro_servicos:
+                ipv4_address: 10.11.0.4
+        privileged: true
+
+    selenium:
+        image: selenium/standalone-chrome
+        ports:
+           - 4444:4444
+        shm_size: 128m
+        networks:
+            docker_micro_servicos:
+                ipv4_address: 10.11.0.5
+networks:
+  docker_micro_servicos:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 10.11.0.0/24
+         gateway: 10.11.0.1
