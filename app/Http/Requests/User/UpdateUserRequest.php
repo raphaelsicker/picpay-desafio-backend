@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests\User;
 
+use App\Rules\User\HasBalance as UserHasBalance;
+use App\Rules\User\IsCommon as UserIsCommon;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -24,9 +27,30 @@ class UpdateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['string'],
-            'cpf' => ['size:11'],
-            'email' => ['email:rfc,dns'],
+            'payee_id' => [
+                'bail',
+                'int',
+                'exists:users,id'
+            ],
+            'payer_id' => [
+                'bail',
+                'int',
+                'exists:users,id',
+                new UserIsCommon
+            ],
+            'value' => [
+                'bail',
+                'numeric',
+                'min:0.01',
+                new UserHasBalance($this->input('payer_id'))
+            ],
+            'status' => [
+                Rule::in([
+                    'pending',
+                    'canceled',
+                    'approved'
+                ])
+            ],
         ];
     }
 }

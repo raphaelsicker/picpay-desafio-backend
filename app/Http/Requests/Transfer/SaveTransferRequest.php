@@ -2,7 +2,11 @@
 
 namespace App\Http\Requests\Transfer;
 
+
+use App\Rules\User\HasBalance as UserHasBalance;
+use App\Rules\User\IsCommon as IsCommonUser;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class SaveTransferRequest extends FormRequest
 {
@@ -13,7 +17,7 @@ class SaveTransferRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +28,33 @@ class SaveTransferRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'payee_id' => [
+                'bail',
+                'required',
+                'int',
+                'exists:users,id'
+            ],
+            'payer_id' => [
+                'bail',
+                'required',
+                'int',
+                'exists:users,id',
+                new IsCommonUser
+            ],
+            'value' => [
+                'bail',
+                'required',
+                'numeric',
+                'min:0.01',
+                new UserHasBalance($this->input('payer_id'))
+            ],
+            'status' => [
+                Rule::in([
+                    'pending',
+                    'canceled',
+                    'approved'
+                ])
+            ],
         ];
     }
 }

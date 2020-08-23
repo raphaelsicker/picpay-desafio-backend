@@ -8,10 +8,8 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    const TYPES = [
-        'common',
-        'shopkeeper'
-    ];
+    const TYPE_COMMON = 'common';
+    const TYPE_SHOPKEEPER = 'shopkeeper';
 
     use Notifiable;
 
