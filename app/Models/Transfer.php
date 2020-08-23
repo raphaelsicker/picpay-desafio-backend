@@ -6,11 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transfer extends Model
 {
-    const STATUS = [
-        'pending',
-        'canceled',
-        'approved'
-    ];
+    const STATUS_PENDING = 'pending';
+    const STATUS_CANCELED = 'canceled';
+    const STATUS_APPROVED = 'approved';
 
     /**
      * The attributes that are mass assignable.

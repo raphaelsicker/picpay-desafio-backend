@@ -66,7 +66,7 @@ class TransferRepository implements TransferRepositoryContract
         throw new Exception('Error on update.');
     }
 
-    public function delete($id): bool
+    public function delete(int $id): bool
     {
         if (!($dados = $this->model->find($id))) {
             throw new Exception('Register not found.');
@@ -77,5 +77,17 @@ class TransferRepository implements TransferRepositoryContract
         }
 
         return true;
+    }
+
+    public function approve(int $id): array
+    {
+        $data = ['status' => $this->model::STATUS_APPROVED];
+        return $this->update($data, $id);
+    }
+
+    public function cancel(int $id): array
+    {
+        $data = ['status' => $this->model::STATUS_CANCELED];
+        return $this->update($data, $id);
     }
 }

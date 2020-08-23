@@ -33,7 +33,7 @@ class TransferService implements TransferServiceContract
         return $this->transferRepository->save($data);
     }
 
-    public function find($id): array
+    public function find(int $id): array
     {
         return $this->transferRepository->find($id);
     }
@@ -43,18 +43,18 @@ class TransferService implements TransferServiceContract
         return $this->transferRepository->update($data, $id);
     }
 
-    public function delete($id): bool
+    public function delete(int $id): bool
     {
         return $this->transferRepository->delete($id);
     }
 
-    public function make($payerId, $payeeId, $value)
+    public function approve(int $id): array
     {
-        // TODO: Implement make() method.
+        return $this->transferRepository->approve($id);
     }
 
-    public function transferProcessed($transferId)
+    public function cancel(int $id): array
     {
-        // TODO: Implement transferProcessed() method.
+        return $this->transferRepository->approve($id);
     }
 }
