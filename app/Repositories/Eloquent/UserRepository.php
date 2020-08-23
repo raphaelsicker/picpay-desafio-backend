@@ -77,4 +77,52 @@ class UserRepository implements UserRepositoryContract
 
         return true;
     }
+
+    public function fakeUsers(): array
+    {
+        return [
+            [
+                'name' => 'Maria',
+                'cpf' => '12345678901',
+                'email' => 'maria@teste.com',
+                'password' => '123',
+                'type' => 'common',
+                'money' => 1000.00
+            ],[
+                'name' => 'João',
+                'cpf' => '12345678902',
+                'email' => 'joao@teste.com',
+                'password' => '987',
+                'type' => 'common',
+                'money' => 100.00
+            ],[
+                'name' => 'José',
+                'cpf' => '12345678903',
+                'email' => 'joao@hotmail.com',
+                'password' => '456',
+                'type' => 'common',
+                'money' => 200.00
+            ],[
+                'name' => 'Rita',
+                'cpf' => '12345678904',
+                'email' => 'joao@gmail.com',
+                'password' => '321',
+                'type' => 'shopkeeper',
+                'money' => 200.00
+            ],[
+                'name' => 'Pedro',
+                'cpf' => '12345678905',
+                'email' => 'pedro@outlook.com',
+                'password' => '321',
+                'type' => 'shopkeeper',
+                'money' => 2000.00
+            ],
+        ];
+    }
+
+    public function isShopkeeper(int $id): bool
+    {
+        $user = $this->find($id);
+        return $user['type'] === $this->model::TYPE_SHOPKEEPER;
+    }
 }
