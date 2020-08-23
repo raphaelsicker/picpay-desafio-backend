@@ -49,7 +49,7 @@ class TransferController extends Controller
             );
         } catch (Exception | Throwable $e) {
             return response()->json(
-                ['erro' => $e->getMessage()],
+                ['error' => $e->getMessage()],
                 JsonResponse::HTTP_INTERNAL_SERVER_ERROR
             );
         }
@@ -73,14 +73,14 @@ class TransferController extends Controller
         int $id
     ): JsonResponse {
         try {
-            $saved = $this->transferService->update(
+            $updated = $this->transferService->update(
                 $request->all(),
                 $id
             );
 
-            if($saved) {
+            if($updated) {
                 return response()->json(
-                    $saved,
+                    $updated,
                     JsonResponse::HTTP_CREATED
                 );
             }
@@ -94,7 +94,7 @@ class TransferController extends Controller
             );
         } catch (Exception | Throwable $e) {
             return response()->json(
-                ['erro' => $e->getMessage()],
+                ['error' => $e->getMessage()],
                 JsonResponse::HTTP_INTERNAL_SERVER_ERROR
             );
         }

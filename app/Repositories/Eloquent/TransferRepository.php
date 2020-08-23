@@ -55,12 +55,11 @@ class TransferRepository implements TransferRepositoryContract
 
     public function update(array $data, int $id): array
     {
-        $updated = $this->model
-            ->where('id', $id)
-            ->update($data);
+        if($transfer = $this->model->find($id)) {
+            $transfer->fill($data);
+            $transfer->save();
 
-        if($updated) {
-            return $this->find($id);
+            return $transfer->toArray();
         }
 
         throw new Exception('Error on update.');
@@ -88,6 +87,12 @@ class TransferRepository implements TransferRepositoryContract
     public function cancel(int $id): array
     {
         $data = ['status' => $this->model::STATUS_CANCELED];
+        return $this->update($data, $id);
+    }
+
+    public function finish(int $id): array
+    {
+        $data = ['status' => $this->model::STATUS_FINISHED];
         return $this->update($data, $id);
     }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\User;
 
-use App\Rules\User\HasBalance as UserHasBalance;
-use App\Rules\User\IsCommon as UserIsCommon;
+use App\Rules\UserHasBalance as UserHasBalance;
+use App\Rules\UserIsCommon as UserIsCommon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 

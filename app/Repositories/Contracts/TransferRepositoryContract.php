@@ -13,4 +13,5 @@ interface TransferRepositoryContract
     public function delete(int $id): bool;
     public function approve(int $id): array;
     public function cancel(int $id): array;
+    public function finish(int $id): array;
 }

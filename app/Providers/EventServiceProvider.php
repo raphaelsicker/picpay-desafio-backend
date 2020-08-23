@@ -2,10 +2,15 @@
 
 namespace App\Providers;
 
+use App\Events\CancelUsersTransferEvent;
+use App\Events\FinishUsersTransferEvent;
+use App\Events\ProcessUsersTransferEvent;
+use App\Listeners\CancelUsersTransferListener;
+use App\Listeners\FinishUsersTransferListener;
+use App\Listeners\ProcessUsersTransferListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -18,6 +23,15 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        ProcessUsersTransferEvent::class => [
+            ProcessUsersTransferListener::class
+        ],
+        CancelUsersTransferEvent::class => [
+            CancelUsersTransferListener::class
+        ],
+        FinishUsersTransferEvent::class => [
+            FinishUsersTransferListener::class
+        ]
     ];
 
     /**

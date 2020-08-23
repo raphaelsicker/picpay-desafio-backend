@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Rules\User;
+namespace App\Rules;
 
 use App\Services\Contracts\UserServiceContract;
 use Illuminate\Contracts\Validation\Rule;
 
-class IsCommon implements Rule
+class UserIsCommon implements Rule
 {
     /**
      * @var UserServiceContract

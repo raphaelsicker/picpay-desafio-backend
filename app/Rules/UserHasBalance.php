@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Rules\User;
+namespace App\Rules;
 
 use App\Services\Contracts\UserServiceContract;
 use Illuminate\Contracts\Validation\Rule;
 
-class HasBalance implements Rule
+class UserHasBalance implements Rule
 {
     /**
      * @var UserServiceContract
@@ -22,7 +22,7 @@ class HasBalance implements Rule
      *
      * @return void
      */
-    public function __construct(int $payerId)
+    public function __construct(?int $payerId)
     {
         $this->payerId = $payerId;
         $this->userService = app(UserServiceContract::class);

@@ -2,7 +2,10 @@
 
 namespace App\Observers;
 
-use App\Jobs\GetAuthorization;
+use App\Events\CancelUsersTransferEvent;
+use App\Events\FinishUsersTransferEvent;
+use App\Events\ProcessUsersTransferEvent;
+use App\Jobs\TransferAuthorize;
 use App\Models\Transfer;
 
 class TransferObserver
@@ -15,8 +18,7 @@ class TransferObserver
      */
     public function created(Transfer $transfer)
     {
-        GetAuthorization::dispatch();
-        dd($transfer);
+        TransferAuthorize::dispatch($transfer);
     }
 
     /**
@@ -27,7 +29,19 @@ class TransferObserver
      */
     public function updated(Transfer $transfer)
     {
-        //
+        if($transfer->authorizedNow()) {
+            event(new ProcessUsersTransferEvent($transfer));
+            return;
+        }
+
+        if($transfer->canceledNow()) {
+            event(new CancelUsersTransferEvent($transfer));
+            return;
+        }
+
+        if($transfer->finishedNow()) {
+            event(new FinishUsersTransferEvent($transfer));
+        }
     }
 
     /**

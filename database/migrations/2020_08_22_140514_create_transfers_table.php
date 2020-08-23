@@ -20,7 +20,8 @@ class CreateTransfersTable extends Migration
             $table->enum('status', [
                 'pending',
                 'canceled',
-                'approved'
+                'approved',
+                'finished'
             ])->default('pending');
 
             $table->foreignId('payer_id')->constrained('users', 'id');

@@ -3,8 +3,8 @@
 namespace App\Http\Requests\Transfer;
 
 
-use App\Rules\User\HasBalance as UserHasBalance;
-use App\Rules\User\IsCommon as IsCommonUser;
+use App\Rules\UserHasBalance;
+use App\Rules\UserIsCommon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -39,7 +39,7 @@ class SaveTransferRequest extends FormRequest
                 'required',
                 'int',
                 'exists:users,id',
-                new IsCommonUser
+                new UserIsCommon
             ],
             'value' => [
                 'bail',
