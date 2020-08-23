@@ -4,21 +4,22 @@
 namespace App\Repositories\Eloquent;
 
 
-use App\Repositories\Contracts\UserRepositoryContract;
-use App\Models\User;
+use App\Models\Transfer;
+use App\Repositories\Contracts\TransferRepositoryContract;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 
-class UserRepository implements UserRepositoryContract
+class TransferRepository implements TransferRepositoryContract
 {
+
     /**
-     * @var Builder | User
+     * @var Builder | Transfer
      */
     private $model;
 
-    public function __construct(User $user)
+    public function __construct(Transfer $transfer)
     {
-        $this->model = $user;
+        $this->model = $transfer;
     }
 
     public function all(
