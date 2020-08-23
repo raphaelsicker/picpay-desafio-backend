@@ -9,4 +9,5 @@ interface UserServiceContract
     public function find($id): array;
     public function update(array $data, int $id): array;
     public function delete($id): bool;
+    public function isShopkeeper(int $value): bool;
 }

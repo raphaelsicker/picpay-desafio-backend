@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\RepositoriesServiceProvider::class,
         App\Providers\ServicesServiceProvider::class,
+        App\Providers\ObserversServiceProvider::class,
     ],
 
     /*

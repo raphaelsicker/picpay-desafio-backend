@@ -47,4 +47,9 @@ class UserService implements UserServiceContract
     {
         return $this->userRepository->delete($id);
     }
+
+    public function isShopkeeper(int $id): bool
+    {
+        return $this->userRepository->isShopkeeper($id);
+    }
 }

@@ -2,12 +2,10 @@
 
 namespace Tests\Feature\User;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
-class UserTest extends TestCase
+class UserCRUDTest extends TestCase
 {
     /**
      * A basic feature test example.
@@ -104,12 +102,12 @@ class UserTest extends TestCase
         return [
             [
                 'name' => 'Maria',
-                'cpf' => '12345678902',
+                'cpf' => '98765432101',
                 'email' => 'maria@teste.com',
                 'password' => '123'
             ],[
                 'name' => 'João',
-                'cpf' => '98765432198',
+                'cpf' => '98765432102',
                 'email' => 'joao@teste.com',
                 'password' => '987'
             ],

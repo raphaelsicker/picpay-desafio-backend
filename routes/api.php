@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::apiResources([
-    'user' => 'UserController'
+    'user' => 'UserController',
+    'transfer' => 'TransferController'
 ]);
-
-Route::post('transfer', 'TransferController@save');
