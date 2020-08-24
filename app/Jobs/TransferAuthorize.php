@@ -3,6 +3,8 @@
 namespace App\Jobs;
 
 use App\Models\Transfer;
+use App\Repositories\Contracts\TransferAuthorizationRepositoryContract;
+use App\Services\Applications\TransferAuthorizerService;
 use App\Services\Contracts\TransferAuthorizerServiceContract;
 use App\Services\Contracts\TransferServiceContract;
 use Illuminate\Bus\Queueable;
@@ -34,12 +36,18 @@ class TransferAuthorize implements ShouldQueue
      * Create a new job instance.
      *
      * @param Transfer $transfer
+     * @param TransferAuthorizationRepositoryContract|null $transferAuthorizationRepositoryContract
      */
-    public function __construct(Transfer $transfer)
-    {
+    public function __construct(
+        Transfer $transfer,
+        TransferAuthorizationRepositoryContract $transferAuthorizationRepositoryContract = null
+    ) {
         $this->transfer = $transfer;
-        $this->transferAuthorizerService = app(TransferAuthorizerServiceContract::class);
         $this->transferService = app(TransferServiceContract::class);
+
+        $this->transferAuthorizerService = $transferAuthorizationRepositoryContract
+            ? new TransferAuthorizerService($transferAuthorizationRepositoryContract)
+            : app(TransferAuthorizerServiceContract::class);
     }
 
     /**
@@ -53,6 +61,9 @@ class TransferAuthorize implements ShouldQueue
 
         if($authorized) {
             $this->transferService->approve($this->transfer->id);
+            return;
         }
+
+        $this->transferService->cancel($this->transfer->id);
     }
 }

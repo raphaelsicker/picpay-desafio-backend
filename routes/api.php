@@ -16,5 +16,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::apiResources([
     'user' => 'UserController',
-    'transfer' => 'TransferController'
+    'transfer' => 'TransferController',
+    'notification' => 'NotificationController'
 ]);

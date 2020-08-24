@@ -1,6 +1,6 @@
 <?php
 
-use App\Repositories\Eloquent\UserRepository;
+use App\Repositories\Fake\UserRepository;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder

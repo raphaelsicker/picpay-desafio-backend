@@ -16,7 +16,6 @@ class Notification extends Model
      * @var array
      */
     protected $fillable = [
-        'value',
         'status',
         'transfer_id',
     ];

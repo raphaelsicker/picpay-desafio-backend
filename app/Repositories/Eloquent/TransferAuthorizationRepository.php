@@ -15,12 +15,13 @@ class TransferAuthorizationRepository implements TransferAuthorizationRepository
 {
     public const AUTHORIZER_URL = 'https://run.mocky.io/v3/8fafdd68-a090-496f-8c9a-3442cf30dae6';
 
-    public function ask(Transfer $transfer): ?Response
+    public function ask(Transfer $transfer): array
     {
         try {
-            return Http::get(self::AUTHORIZER_URL);
+            $reponse = Http::get(self::AUTHORIZER_URL);
+            return ['message' => $reponse['message'] ?? ''];
         } catch (Exception | Throwable $e) {
-            return null;
+            return [];
         }
     }
 }

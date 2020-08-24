@@ -48,7 +48,7 @@ class TransferService implements TransferServiceContract
         return $this->transferRepository->delete($id);
     }
 
-    public function send(int $id): array
+    public function approve(int $id): array
     {
         return $this->transferRepository->approve($id);
     }

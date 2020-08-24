@@ -31,6 +31,8 @@ class UserCRUDTest extends TestCase
         string $email,
         string $password
     ): void {
+        $this->withoutNotifications();
+
         DB::beginTransaction();
 
         $response = $this->postJson(
@@ -49,6 +51,8 @@ class UserCRUDTest extends TestCase
 
     public function testUpdateUser()
     {
+        $this->withoutNotifications();
+
         DB::beginTransaction();
 
         $usuarios = $this->usersProvider();
@@ -77,6 +81,8 @@ class UserCRUDTest extends TestCase
 
     public function testDeleteUser()
     {
+        $this->withoutNotifications();
+
         DB::beginTransaction();
         $usuarios = $this->usersProvider();
 
@@ -103,12 +109,12 @@ class UserCRUDTest extends TestCase
             [
                 'name' => 'Maria',
                 'cpf' => '98765432101',
-                'email' => 'maria@teste.com',
+                'email' => 'maria@phpunit.com',
                 'password' => '123'
             ],[
                 'name' => 'João',
                 'cpf' => '98765432102',
-                'email' => 'joao@teste.com',
+                'email' => 'joao@phpunit.com',
                 'password' => '987'
             ],
         ];

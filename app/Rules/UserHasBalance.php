@@ -38,7 +38,7 @@ class UserHasBalance implements Rule
     public function passes($attribute, $value)
     {
         $user = $this->userService->find($this->payerId);
-        return $user['money'] >= $value;
+        return $user ? $user['money'] >= $value : false;
     }
 
     /**

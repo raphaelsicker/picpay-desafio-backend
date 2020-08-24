@@ -15,12 +15,13 @@ class NotificationSenderRepository implements NotificationSenderRepositoryContra
 {
     public const AUTHORIZER_URL = 'https://run.mocky.io/v3/b19f7b9f-9cbf-4fc6-ad22-dc30601aec04';
 
-    public function ask(Notification $notification): ?Response
+    public function ask(Notification $notification): array
     {
         try {
-            return Http::get(self::AUTHORIZER_URL);
+            $reponse = Http::get(self::AUTHORIZER_URL);
+            return ['message' => $reponse['message'] ?? ''];
         } catch (Exception | Throwable $e) {
-            return null;
+            return [];
         }
     }
 }

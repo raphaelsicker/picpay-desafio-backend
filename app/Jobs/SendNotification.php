@@ -3,6 +3,8 @@
 namespace App\Jobs;
 
 use App\Models\Notification;
+use App\Repositories\Contracts\NotificationSenderRepositoryContract;
+use App\Services\Applications\NotificationSenderService;
 use App\Services\Contracts\NotificationSenderServiceContract;
 use App\Services\Contracts\NotificationServiceContract;
 use Illuminate\Bus\Queueable;
@@ -34,12 +36,18 @@ class SendNotification implements ShouldQueue
      * Create a new job instance.
      *
      * @param Notification $notification
+     * @param NotificationSenderRepositoryContract|null $notificationSenderRepositoryContract
      */
-    public function __construct(Notification $notification)
-    {
+    public function __construct(
+        Notification $notification,
+        NotificationSenderRepositoryContract $notificationSenderRepositoryContract = null
+    ) {
         $this->notification = $notification;
-        $this->notificationSenderService = app(NotificationSenderServiceContract::class);
         $this->notificationService = app(NotificationServiceContract::class);
+
+        $this->notificationSenderService = $notificationSenderRepositoryContract
+            ? new NotificationSenderService($notificationSenderRepositoryContract)
+            : app(NotificationSenderServiceContract::class);
     }
 
     /**
@@ -53,6 +61,9 @@ class SendNotification implements ShouldQueue
 
         if($authorized) {
             $this->notificationService->check($this->notification->id);
+            return;
         }
+
+        $this->notificationService->cancel($this->notification->id);
     }
 }

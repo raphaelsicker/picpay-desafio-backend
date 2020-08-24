@@ -4,6 +4,7 @@
 namespace App\Services\Applications;
 
 
+use App\Repositories\Contracts\NotificationRepositoryContract;
 use App\Repositories\Contracts\TransferRepositoryContract;
 use App\Repositories\Contracts\UserRepositoryContract;
 use App\Rules\UserHasBalance;
@@ -24,12 +25,19 @@ class UserTransferService implements UserTransferServiceContract
      */
     private $transferRepository;
 
+    /**
+     * @var NotificationRepositoryContract
+     */
+    private $notificationRepository;
+
     public function __construct(
         UserRepositoryContract $userRepository,
-        TransferRepositoryContract $transferRepository
+        TransferRepositoryContract $transferRepository,
+        NotificationRepositoryContract $notificationRepository
     ) {
         $this->userRepository = $userRepository;
         $this->transferRepository = $transferRepository;
+        $this->notificationRepository = $notificationRepository;
     }
 
     /**
@@ -66,7 +74,11 @@ class UserTransferService implements UserTransferServiceContract
 
     public function finish(array $transfer): bool
     {
-        echo 'finalizou';
+        $notification = $this->notificationRepository->save([
+            'transfer_id' => $transfer['id']
+        ]);
+
+        return !empty($notification['id'] ?? false);
     }
 
     private function balanceIncrement(int $userId)
@@ -75,7 +87,7 @@ class UserTransferService implements UserTransferServiceContract
 
         $this->userRepository->update(
             ['money' => $user['money'] + $this->transferData['value']],
-            $this->transferData['id']
+            $userId
         );
     }
 
@@ -85,7 +97,7 @@ class UserTransferService implements UserTransferServiceContract
 
         $this->userRepository->update(
             ['money' => $user['money'] - $this->transferData['value']],
-            $this->transferData['id']
+            $userId
         );
     }
 
@@ -127,7 +139,6 @@ class UserTransferService implements UserTransferServiceContract
                 new UserHasBalance($this->transferData['payer_id'] ?? null)
             ],
             'status' => [
-                'required',
                 Rule::in([
                     'approved'
                 ])
