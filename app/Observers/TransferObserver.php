@@ -43,37 +43,4 @@ class TransferObserver
             event(new FinishUsersTransferEvent($transfer));
         }
     }
-
-    /**
-     * Handle the transfer "deleted" event.
-     *
-     * @param  Transfer  $transfer
-     * @return void
-     */
-    public function deleted(Transfer $transfer)
-    {
-        //
-    }
-
-    /**
-     * Handle the transfer "restored" event.
-     *
-     * @param  Transfer  $transfer
-     * @return void
-     */
-    public function restored(Transfer $transfer)
-    {
-        //
-    }
-
-    /**
-     * Handle the transfer "force deleted" event.
-     *
-     * @param  Transfer  $transfer
-     * @return void
-     */
-    public function forceDeleted(Transfer $transfer)
-    {
-        //
-    }
 }

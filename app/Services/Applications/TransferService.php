@@ -48,13 +48,13 @@ class TransferService implements TransferServiceContract
         return $this->transferRepository->delete($id);
     }
 
-    public function approve(int $id): array
+    public function send(int $id): array
     {
         return $this->transferRepository->approve($id);
     }
 
     public function cancel(int $id): array
     {
-        return $this->transferRepository->approve($id);
+        return $this->transferRepository->cancel($id);
     }
 }
