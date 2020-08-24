@@ -40,7 +40,7 @@ As configurações padrões já estarão no arquivo .env mas é possível altera
 
    
     composer install
-    php artisan key:generate
+    php artisan optimize
     php artisan migrate
 
 ## Testes
