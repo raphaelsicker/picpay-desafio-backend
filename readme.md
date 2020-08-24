@@ -36,7 +36,7 @@ As configurações padrões já estarão no arquivo .env mas é possível altera
     DB_USERNAME=seu-login
     DB_PASSWORD=sua-senha
 
-* Execute os seguintes comandos 
+* Execute os seguintes comandos dentro da imagem do docker 
 
    
     composer install
@@ -51,7 +51,7 @@ Supondo que a pasta do repositorio seja picpay, é possível rodar os scripts de
     
 E a seguir:
     
-    docker exec -it picpay_web_1 bash
+    php artisan test
     
 
     
