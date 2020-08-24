@@ -11,6 +11,11 @@ use Illuminate\Queue\InteractsWithQueue;
 class FinishUsersTransferListener
 {
     /**
+     * @var UserTransferServiceContract
+     */
+    private $userTransferService;
+
+    /**
      * Create the event listener.
      *
      * @param UserTransferServiceContract $userTransferService

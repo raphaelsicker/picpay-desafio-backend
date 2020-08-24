@@ -4,11 +4,14 @@ namespace App\Listeners;
 
 use App\Events\ProcessUsersTransferEvent;
 use App\Services\Contracts\UserTransferServiceContract;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class ProcessUsersTransferListener
 {
+    /**
+     * @var UserTransferServiceContract
+     */
+    private $userTransferService;
+
     /**
      * Create the event listener.
      *

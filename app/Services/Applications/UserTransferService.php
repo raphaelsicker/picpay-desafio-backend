@@ -50,8 +50,11 @@ class UserTransferService implements UserTransferServiceContract
         $this->transferData = $transferData;
 
         if($this->isValidTransfer()) {
-            $this->balanceIncrement($this->transferData['payee_id']);
-            $this->balanceDecrement($this->transferData['payer_id']);
+            $this->userRepository->balanceIncrement(
+                $transferData['payee_id'],
+                $transferData['value']
+            );
+
             $this->transferRepository->finish($this->transferData['id']);
 
             return true;
@@ -64,8 +67,10 @@ class UserTransferService implements UserTransferServiceContract
         $this->transferData = $transferData;
 
         if($this->isValidTransfer()) {
-            $this->balanceIncrement($this->transferData['payer_id']);
-            $this->balanceDecrement($this->transferData['payee_id']);
+            $this->userRepository->balanceDecrement(
+                $transferData['payer_id'],
+                $transferData['value']
+            );
 
             return true;
         }
@@ -79,26 +84,6 @@ class UserTransferService implements UserTransferServiceContract
         ]);
 
         return !empty($notification['id'] ?? false);
-    }
-
-    private function balanceIncrement(int $userId)
-    {
-        $user = $this->userRepository->find($userId);
-
-        $this->userRepository->update(
-            ['money' => $user['money'] + $this->transferData['value']],
-            $userId
-        );
-    }
-
-    private function balanceDecrement(int $userId)
-    {
-        $user = $this->userRepository->find($userId);
-
-        $this->userRepository->update(
-            ['money' => $user['money'] - $this->transferData['value']],
-            $userId
-        );
     }
 
     private function isValidTransfer(): bool

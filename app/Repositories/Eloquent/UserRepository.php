@@ -78,6 +78,30 @@ class UserRepository implements UserRepositoryContract
         return true;
     }
 
+    public function balanceIncrement(int $userId, float $value): array
+    {
+        $user = $this->find($userId);
+
+        return $this->update(
+            ['money' => $user['money'] + $value],
+            $userId
+        );
+    }
+
+    public function balanceDecrement(int $userId, float $value): array
+    {
+        $user = $this->find($userId);
+
+        return $this->update(
+            ['money' => $user['money'] - $value],
+            $userId
+        );
+    }
+
+    /**
+     * Usaado para a criação de um banco de dados
+     * @return array[]
+     */
     public function fakeUsers(): array
     {
         return [

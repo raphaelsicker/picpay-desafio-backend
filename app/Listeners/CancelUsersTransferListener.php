@@ -9,6 +9,11 @@ use App\Services\Contracts\UserTransferServiceContract;;
 class CancelUsersTransferListener
 {
     /**
+     * @var UserTransferServiceContract
+     */
+    private $userTransferService;
+
+    /**
      * Create the event listener.
      *
      * @param UserTransferServiceContract $userTransferService
