@@ -45,13 +45,18 @@ As configurações padrões já estarão no arquivo .env mas é possível altera
 
 ## Testes
 
-Supondo que a pasta do repositorio seja picpay, é possível rodar os scripts de teste da aplicação utilizando o seguinte comando para acessar a imagem web do docker:
+Supondo que a pasta do repositorio seja `picpay`, é possível rodar os scripts de teste da aplicação utilizando o seguinte comando para acessar a imagem web do docker:
 
     docker exec -it picpay_web_1 bash
     
 E a seguir:
     
     php artisan test
+    
+## A API
+Supondo que o seu dominio de testes seja `http://localhost/`, a api de transferencia pode ser encontrada em:
+
+    http://localhost/api/transfer
     
 
     
